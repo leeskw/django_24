@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+<!--  -->
+
+{% block content %}
+
+<style>
+  form {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: white;
+    width: 400px !important;
+    border-radius: 10px;
+    padding: 20px 20px 20px 20px !important;
+    margin: 20px auto !important;
+  }
+  .errorlist {
+    display: none;
+  }
+</style>
+
+<!-- <div class="col-md-6 my-5 mx-auto"> -->
+<!-- <div class="col-md-6 offset-md-3 my-5"> -->
+<div class="col-md-4 offset-md-4 my-2">
+  <div class="formContainer">
+    <form action="." method="post">
+      <h4 class="text-center pb-3">Welcome back!</h4>
+      {% csrf_token %} 
+      {{ form.as_p }} 
+
+      {% if form.errors %} 
+      <ul class="mt-2 ps-2 py-2 fw-bold bg-warning-subtle list-unstyled" style="border-radius: 5px;">
+        {% for field in form %} 
+          {% for error in field.errors %}
+            <li>{{ error|escape }}</li>          
+          {% endfor %} 
+        {% endfor %} 
+
+        {% for error in form.non_field_errors %}
+          <li>{{ error|escape }}</li>
+        {% endfor %} 
+      </ul>
+      {% endif %}
+      <button class="btn btn-primary" style="width: 100%; margin: 10px auto">
+        Login to your account
+      </button>
+      <p>Don't have an account? <a href="{% url 'signup' %}" class="text-decoration-none text-primary-emphasis fw-bold">Register</a></p>
+    </form>
+  </div>
+</div>
+<script>
+  let form_container = document.querySelector('.formContainer');
+  let inputs = form_container.querySelectorAll('input');
+  let labels = form_container.querySelectorAll("label");
+
+  console.log('Testing...')
+  console.log(inputs)
+  
+  for (let input of inputs) {
+    input.classList.add('form-control');
+    if (input.name == 'username') input.placeholder = 'name@example.com'
+    else input.placeholder = 'Enter ' + input.name
+  }
+
+  for (let label of labels) {
+    label.style.display = 'none'
+  }
+</script>
+{% endblock content %}
