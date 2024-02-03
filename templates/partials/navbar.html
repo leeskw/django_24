@@ -1,0 +1,72 @@
+<style>
+  .mynav ul a {
+    color: white !important;
+  }
+
+  .mynav ul li .dropdown-item:hover {
+    color: black !important;
+  }
+
+  .mynav ul {
+    margin-left: auto;
+  }
+
+  .errorlist {
+    list-style-type: none;
+    margin: 0;
+    padding: 4px;
+  }
+</style>
+
+<!-- Responsive navbar-->
+<nav class="navbar mynav navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <!-- me-8 -->
+    <a class="navbar-brand me-8" href="{% url 'index' %}">DevDrive</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item active dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            style="color: white"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Hi, {{request.user.username}}
+          </a>
+          <ul class="dropdown-menu bg-dark">
+            <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'create-article' %}">Create Articles</a></li>
+            <li><a class="dropdown-item" href="{% url 'signout' %}">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item me-3">
+          <a href="{% url 'signup' %}">
+            <button type="button" class="btn btn-outline-light">SignUp</button>
+          </a>
+        </li>
+        <li class="nav-item me-3">
+          <a href="{% url 'signin' %}">
+            <button type="button" class="btn btn-outline-light">Login</button>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
